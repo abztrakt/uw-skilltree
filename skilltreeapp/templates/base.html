@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta http-equiv="cleartype" content="on">
+        
+        <!-- favicon and mobile device icons-->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}skilltreeapp/ico/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}skilltreeapp/ico/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}skilltreeapp/ico/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ STATIC_URL }}skilltreeapp/ico/apple-touch-icon-57x57-precomposed.png"> 
+        <link rel="shortcut icon" href="{{ STATIC_URL }}skilltreeapp/ico/favicon.ico" />
+        
+        <!-- windows8 - tile icon  & color -->
+        <meta name="msapplication-TileImage" content="{{ STATIC_URL }}skilltreeapp/ico/apple-touch-icon-144x144-precomposed.png">
+        <meta name="msapplication-TileColor" content="#222222">
+        
+        <!-- ios webapps - delete if not needed -->
+        <!--
+        <meta name="apple-touch-fullscreen" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="">
+        -->
+        
+        <!-- normalize/bootstrap -depending on what you want to start with -->
+        <!--<link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/vendor/normalize-2.1.3.css">-->
+        <link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/vendor/bootstrap-3.0.0.min.css">
+       
+        <!-- add google/web fonts if needed -->
+        
+        {% load compress %}
+        
+        {% compress css %}
+        
+            <link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/mobile.less" type="text/less">
+            
+            {% if is_desktop %}
+            <link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/desktop.less" type="text/less">
+            {% endif %}
+
+        {% endcompress %}
+        
+        <script src="{{ STATIC_URL }}skilltreeapp/js/vendor/modernizr-2.6.2.min.js"></script>
+        
+    </head>
+    <body>
+        
+        <!-- wrap all content here -->
+        <div id="wrap">
+        
+            <!-- begin page content -->
+            <div class="container">
+                
+                <div class="page-header">
+                   <h1>Django App Scaffolding</h1>
+                </div>
+                
+                <ul>
+                    <li><a href="/">home</a></li>
+                    <li><a href="/basic">basic</a></li>
+                    <li><a href="/hybrid">hybrid</a></li>
+                </ul>
+                
+                <!-- add your site or application content here -->
+                <div id="content">
+                    {% block content %}{% endblock %}
+                </div>            
+                
+            </div>
+        
+        
+        </div><!-- /wrap -->
+
+        <div id="footer">
+            <div class="container">
+                <!-- example of is_desktop usage in templates -->    
+                {% if is_desktop %}
+                <p class="text-muted credit">Courtesy of <a href="">Charlon Palacay</a> and <a href="">Craig Stimmel</a>. UW-IT ACA</p>
+                {% else %}
+                <p class="text-muted credit">Courtesy of <a href="">Charlon</a> and <a href="">Craig</a>. UW-IT ACA</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- show this in dev mode -->
+        <div id="developer">
+            <span class="label label-danger">{% if is_desktop %}Desktop{% else %}Mobile{%endif %}</span>
+        </div>
+        
+        <!-- jquery -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}skilltreeapp/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+                
+        <!-- javascript -->
+        {% compress js %}
+            <script src="{{ STATIC_URL }}skilltreeapp/js/vendor/bootstrap-3.0.0.min.js"></script>
+            <script src="{{ STATIC_URL }}skilltreeapp/js/vendor/handlebars-1.0.0.min.js"></script>
+            
+            <script src="{{ STATIC_URL }}skilltreeapp/js/main.js"></script>
+            {% block extra_js %}{% endblock %}
+        {% endcompress %}
+        
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <!--
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+        -->
+        
+    </body>
+</html>

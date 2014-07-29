@@ -1,0 +1,3 @@
+include README.md
+recursive-include skilltreeapp/static *
+recursive-include skilltreeapp/templates *
