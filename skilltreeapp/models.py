@@ -19,8 +19,13 @@ class LearningConcept(models.Model):
 class Prerequisite(models.Model):
     """
     """
+    # the base skill
     from_concept = models.ForeignKey('LearningConcept', related_name='from_concept')
+    # its children skills
     to_concept = models.ManyToManyField('LearningConcept', related_name='to_concept')
+
+    def __unicode__(self):
+        return self.from_concept.title
 
 class Category(models.Model):
     """ Repesents a larger categorization of the learning concepts.
