@@ -25,7 +25,6 @@ def tools_login(request):
     """
     c = {}
     c.update(csrf(request))
-    import pdb;pdb.set_trace()
     if request.user.is_authenticated():
         try:
             return HttpResponseRedirect(request.GET['next'])
