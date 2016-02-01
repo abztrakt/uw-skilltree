@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <meta http-equiv="cleartype" content="on">
 
         <!-- favicon and mobile device icons-->
@@ -15,7 +15,8 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}skilltreeapp/ico/apple-touch-icon-114x114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}skilltreeapp/ico/apple-touch-icon-72x72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ STATIC_URL }}skilltreeapp/ico/apple-touch-icon-57x57-precomposed.png">
-        <link rel="shortcut icon" href="{{ STATIC_URL }}skilltreeapp/ico/favicon.ico" />
+        <link rel="shortcut icon" href="{{ STATIC_URL }}skilltreeapp/ico/favicon.ico" />        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 
         <!-- windows8 - tile icon  & color -->
         <meta name="msapplication-TileImage" content="{{ STATIC_URL }}skilltreeapp/ico/apple-touch-icon-144x144-precomposed.png">
@@ -34,14 +35,14 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/vendor/bootstrap-3.0.0.min.css">
 
         <!-- add google/web fonts if needed -->
-
+        {% load static %}
         {% load compress %}
 
         {% compress css %}
 
-            <link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/mobile.less" type="text/less">
+            <!--<link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/mobile.less" type="text/less">-->
 
-            <link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/desktop.less" type="text/less">
+            <link rel="stylesheet" href="{% static "skilltreeapp/css/desktop.less" %}" type="text/less">
 
             {% block css %}
             {% endblock %}
@@ -53,21 +54,46 @@
     </head>
     <body>
 
+        <nav class="navbar navbar-default page-topper">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#team-tool-nav" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Student Dev Tools</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="team-tool-nav">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Dashboard</a></li>
+                        <li><a href="/basic">Basic</a></li>
+                        <li><a href="/hybrid">Hybrid</a></li>
+                        <li><a href="/chronos">Chronos</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">User Name <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/accounts/login">Log in</a></li>
+                                <li><a href="/accounts/logout">Log out</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/admin">Administration</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
         <!-- wrap all content here -->
         <div id="wrap">
+            <h1 class="title">Team Tools</h1>
 
             <!-- begin page content -->
             <div class="container">
-
-                <div class="page-header">
-                   <h1>Django App Scaffolding</h1>
-                </div>
-
-                <ul>
-                    <li><a href="/">home</a></li>
-                    <li><a href="/basic">basic</a></li>
-                    <li><a href="/hybrid">hybrid</a></li>
-                </ul>
 
                 <!-- add your site or application content here -->
                 <div id="content">
@@ -102,6 +128,26 @@
             <script src="{{ STATIC_URL }}skilltreeapp/js/main.js"></script>
             {% block extra_js %}{% endblock %}
         {% endcompress %}
+
+        <script type='text/javascript'>
+            $(document).ready(function(){
+                $('ul.nav').children('li').each(function(){
+                    var root = $(this).children('a').attr('href');
+                    var pathname = window.location.pathname;
+                    if (pathname.indexOf('basic') > -1 && root == '/basic'){
+                        $(this).addClass('active');
+                    } else if (pathname.indexOf('hybrid') > -1 && root == '/hybrid') {
+                        $(this).addClass('active');
+                    } else if (pathname.indexOf('chronos') > -1 && root == '/chronos') {
+                        $(this).addClass('active');
+                    } else if (pathname == '/' && root == '/'){
+                        $(this).addClass('active');
+                    }
+                });
+
+            });
+        </script>
+
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <!--

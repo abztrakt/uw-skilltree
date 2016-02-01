@@ -2,39 +2,33 @@
 
 {% block content %}
 
-{% if form.errors %}
-    <p class="required">Please correct the error{{ form.errors|pluralize }} below.</p>
-    {% for key,value in form.errors.items %}
-        <p class='required'>The {{ key }} field is required.</p>
-    {% endfor %}
-{% endif %}
+
 
     <div id='login_box'>
-        <div class='form_box'>
+        <div class='form_box col-lg-3 col-md-4 col-sm-6 col-xs-8'>
 
             <h2>Log in</h2>
-            <form action='' method='post'>{% csrf_token %}
+            {% if form.errors %}
+                {% for key,value in form.errors.items %}
+                    <div class="alert alert-danger">
+                        <p class='required'>The {{ key }} field is required.</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
 
-                <label class='input_label'>
-                    <strong>Username</strong>
-                    {{ form.username }}
-                </label>
-                <label class='input_label'>
-                    <strong>Password</strong>
-                    {{ form.password }}
-                </label>
-                <input id='login_button' class='btn btn_primary' type='submit' value='Log in'/>
+            <form action='' method='post'>{% csrf_token %}
+                {% load skillfilters %}
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    {{ form.username|addClass:'form-control' }}
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                    {{ form.password|addClass:'form-control' }}
+                </div>
+                <input id='login_button' class='btn btn-primary' type='submit' value='Log in'/>
                 <input type='hidden' name='next' value='{{ next }}'/>
             </form>
-        </div>
-    </div>
-    <div id="login_info">
-        <div class="section">
-            <h1>
-                {% if request.user.is_authenticated %}Hello {{request.user}}. {% else %}Labgeeks{% endif %}
-            </h1>
-
-            <h2>Greetings. Please log in.</h2>
         </div>
     </div>
 {% endblock %}
