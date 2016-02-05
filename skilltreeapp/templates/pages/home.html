@@ -1,11 +1,94 @@
 {% extends 'base.html' %}
 
+{% block extra_js %}
+<script type='text/javascript'>
+    $(function() {
+        $('#id_due_date').datepicker();
+    });
+</script>
+{% endblock %}
+
 {% block content %}
 
-<h2><span class="glyphicon glyphicon-tree-conifer"></span>Home</h2>
+    <h2><span class="glyphicon glyphicon-tree-conifer"></span>Home</h2>
 
-<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut aliquam libero, vel ultrices nisl. Integer blandit volutpat nisi at hendrerit. </p>
+    <div id='team_info'>
+        <h3>Hello {{ request.user }}</h3>
+        {% if events or alerts %}
+            <div class='row'>
+                <form method='post' action='' > {% csrf_token %}
+                    <div id='notificationwrap'>
+                    {% if events %}
+                        <div id='events' class='col-lg-12 col-md-12 col-sm-12'>
+                            <h4>Events</h4>
+                            {% for event in events %}
+                                <div class='notification col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+                                    <h3><input type='checkbox' nake='pk' value='{{ event.pk }}'>{{ event.due_date.month }}/{{ event.due_date.day }} {{ event.title }}</h3>
+                                    {% if event.user %}
+                                        <p class='info'>{{ event.user }} posted on {{ event.date }}</p>
+                                    {% else %}
+                                        <p>Team memebers posted on {{ event.date }}</p>
+                                    {% endif %}
+                                    <p>{{ event.content }}</p>
+                                    <p>Due on {{ event.due_date }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut aliquam libero, vel ultrices nisl. Integer blandit volutpat nisi at hendrerit. Maecenas ornare at ligula quis elementum. Suspendisse feugiat nulla ut elit scelerisque, a commodo risus lobortis. Duis vehicula, lorem eu posuere pulvinar, eros eros luctus felis, nec aliquet mauris purus a libero. Fusce nunc sem, laoreet non dui vel, mattis tincidunt mauris. Proin tincidunt nisi ac felis blandit, sit amet vehicula risus suscipit.</p>
+                    {% if alerts %}
+                        <div id='alerts'>
+                            <h4>Alerts</h4>
+                            {% for alert in alerts %}
+                                <div class='notification'>
+                                    <h3><input type='checkbox' name='pk' value='{{ alert.pk }}'>{{ alert.title }}</h3>
+                                    {% if alert.user %}
+                                        <p class='info'>{{ alert.user }} posted on {{ alert.date }}</p>
+                                    {% else %}
+                                        <p class='info'>Team members posted on {{ alert.date }}
+                                    {% endif %}
+                                    <p>{{ alert.content }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if events or alerts %}
+                        <input type='submit' class='btn btn-primary' value='Archive' />
+                    {% endif %}
+                </div>
+                </form>
+            </div>
+        {% endif %}
+
+        <div class='row'>
+            <h4>Post Alert or Event</h4>
+            <div id='addNotification'>
+                <form method='post' action=''>{% csrf_token %}
+                    <label class='input_label'>
+                        <strong>Title
+                            {% if not form_is_valid %}
+                                <span class='required'>*</span></strong>
+                            {% endif %}
+                        </strong>
+                        {{ form.title }}
+                    </label>
+                    <label class='input-label'>
+                        <strong>Content</strong>
+                        {{ form.content }}
+                    </label>
+                    <label class='input-label'>
+                        <strong>Due Date</strong>
+                        <p class='info'>Add a due date to create an event</p>
+                        {{ form.due_date }}
+                    </label>
+                    {% if not form_is_valid %}
+                        <p class='required'>This field is required.</p>
+                    {% endif %}
+                    <input type='submit' class='btn btn-primary' value="Submit" />
+                </form>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
