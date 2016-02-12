@@ -37,10 +37,10 @@
                     {% endif %}
 
                     {% if alerts %}
-                        <div id='alerts'>
+                        <div id='alerts' class='col-lg-12 col-md-12 col-sm-12'>
                             <h4>Alerts</h4>
                             {% for alert in alerts %}
-                                <div class='notification'>
+                                <div class='notification col-lg-3 col-md-4 col-sm-6 col-xs-12'>
                                     <h3><input type='checkbox' name='pk' value='{{ alert.pk }}'>{{ alert.title }}</h3>
                                     {% if alert.user %}
                                         <p class='info'>{{ alert.user }} posted on {{ alert.date }}</p>
