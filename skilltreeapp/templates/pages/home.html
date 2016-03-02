@@ -18,23 +18,6 @@
             <div class='row'>
                 <form method='post' action='' > {% csrf_token %}
                     <div id='notificationwrap'>
-                    {% if events %}
-                        <div id='events' class='col-lg-12 col-md-12 col-sm-12'>
-                            <h4>Events</h4>
-                            {% for event in events %}
-                                <div class='notification col-lg-3 col-md-4 col-sm-6 col-xs-12'>
-                                    <h3><input type='checkbox' nake='pk' value='{{ event.pk }}'>{{ event.due_date.month }}/{{ event.due_date.day }} {{ event.title }}</h3>
-                                    {% if event.user %}
-                                        <p class='info'>{{ event.user }} posted on {{ event.date }}</p>
-                                    {% else %}
-                                        <p>Team memebers posted on {{ event.date }}</p>
-                                    {% endif %}
-                                    <p>{{ event.content }}</p>
-                                    <p>Due on {{ event.due_date }}</p>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
 
                     {% if alerts %}
                         <div id='alerts' class='col-lg-12 col-md-12 col-sm-12'>
@@ -48,6 +31,24 @@
                                         <p class='info'>Team members posted on {{ alert.date }}
                                     {% endif %}
                                     <p>{{ alert.content }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if events %}
+                        <div id='events' class='col-lg-12 col-md-12 col-sm-12'>
+                            <h4>Events</h4>
+                            {% for event in events %}
+                                <div class='notification col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+                                  <h3><input type='checkbox' name='pk' value='{{ event.pk }}'>{{ event.title }}</h3>
+                                    {% if event.user %}
+                                        <p class='info'>{{ event.user }} posted on {{ event.date }}</p>
+                                    {% else %}
+                                        <p>Team memebers posted on {{ event.date }}</p>
+                                    {% endif %}
+                                    <p>{{ event.content }}</p>
+                                    <p>Due on {{ event.due_date }}</p>
                                 </div>
                             {% endfor %}
                         </div>
