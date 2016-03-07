@@ -32,13 +32,14 @@
 
         <!-- normalize/bootstrap -depending on what you want to start with -->
         <!--<link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/vendor/normalize-2.1.3.css">-->
-        <link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/vendor/bootstrap-3.0.0.min.css">
 
         <!-- add google/web fonts if needed -->
         {% load static %}
         {% load compress %}
 
         {% compress css %}
+            <link rel="stylesheet" href="{% static "skilltreeapp/css/vendor/bootstrap-3.0.0.min.css" %}">
+
 
             <!--<link rel="stylesheet" href="{{ STATIC_URL }}skilltreeapp/css/mobile.less" type="text/less">-->
 
@@ -117,10 +118,12 @@
 
         <!-- javascript -->
         {% compress js %}
-            <script src="{{ STATIC_URL }}skilltreeapp/js/vendor/bootstrap-3.0.0.min.js"></script>
-            <script src="{{ STATIC_URL }}skilltreeapp/js/vendor/handlebars-1.0.0.min.js"></script>
+        {% load static %}
 
-            <script src="{{ STATIC_URL }}skilltreeapp/js/main.js"></script>
+            <script src="{% static "skilltreeapp/js/vendor/bootstrap-3.0.0.min.js" %}"></script>
+            <script src="{% static "skilltreeapp/js/vendor/handlebars-1.0.0.min.js" %}"></script>
+
+            <script src="{% static "skilltreeapp/js/main.js" %}"></script>
             {% block extra_js %}{% endblock %}
         {% endcompress %}
 
